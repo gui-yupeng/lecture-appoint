@@ -4,7 +4,6 @@ const bodyparser = require('koa-bodyparser')({
   
   module.exports = async (ctx, next) => {
     await bodyparser(ctx, async () => {
-      console.log(ctx.request.body);
       if (/^get|delete$/i.test(ctx.method)) {
         ctx.params = ctx.query
       } else {

@@ -21,32 +21,45 @@ exports.route={
         "requestTime":1619092806
         "sex":"男" */
         let personData=this.params;
-        let stuNum=personData.studentNum;
+        let stuNum=null;
+        let result=null;
+        if(personData.studentNum){
+            stuNum = personData.studentNum;
+        }else{
+            console.log('请求参数中学号项为空');
+            //this.throw(401,'请求参数不全');
+        }
         //学号匹配
         let isTargetStu=false;
-        console.log(this.params);
-        if(/^06017/.test(stuNum)){
+        if(/^06017[0-9][0-9][0-9]/.test(stuNum)){
             isTargetStu=true;
-        }else if(/^06018/.test(stuNum)){
+        }
+        if(/^06018[0-9][0-9][0-9]/.test(stuNum)){
             isTargetStu=true;
-        }else if(/^06019/.test(stuNum)){
+        }
+        if(/^06019[0-9][0-9][0-9]/.test(stuNum)){
             isTargetStu=true;
-        }else if(/^D1220/.test(stuNum)){
+        }
+        if(/^D1220[0-9][0-9][0-9]/.test(stuNum)){
             isTargetStu=true;
-        }else if(/^D2220/.test(stuNum)){
+        }
+        if(/^D2220[0-9][0-9][0-9]/.test(stuNum)){
             isTargetStu=true;
         }
         if(!isTargetStu){
             //只面向电子学院本科生
             this.throw(401,'很抱歉，您不在允许预约的学生名单中，请与管理员联系');
         }
-        let audienceCollection=await mongo(db.col_audience);
-        let isRepeat=await audienceCollection.findOne({"studentNum":stuNum});
+        const auCollection=await mongo(dbMsg.col_audience);
+        let isRepeat=await auCollection.findOne({"studentNum":stuNum});
         if(isRepeat){
             this.throw(401,'已经预约成功，无法重复预约！');
+            console.log('已经预约成功，无法重复预约');
+        }else{
+            result=await audienceCollection.insertOne(personData);
         }
-        let res=await audienceCollection.insertOne(personData);
-        return 'OK';
+        console.log(result);
+        return result;
     }
 
 };
