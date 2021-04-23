@@ -1,3 +1,3 @@
 # koa-lecture-appoint
 
-讲座预约
+东南大学电子学院讲座预约
