@@ -53,7 +53,6 @@ exports.route={
         const auCollection=await mongo(dbMsg.col_audience);
         const lectureCollection=await mongo(dbMsg.col_lectureMsg);
         let isLecture=await lectureCollection.findOne({"_id":mongodb.ObjectId(targetID)});
-        console.log(isLecture);
         //if(!isLecture){
             //这一步是有问题的，根据ID进行检索时，ID错误程序卡在查询那行无反应，但前端发送的ID基本不会错，修复者请看mongodb的相关文档
             //throw '根据讲座ID，未在数据库中查询到该讲座';

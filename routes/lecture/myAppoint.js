@@ -7,7 +7,7 @@ exports.route={
         let studentNum=this.params.studentNum;
         let studentName=this.params.studentName;
         let lectureCollection=await mongo(dbMsg.col_audience);
-        let myAppointList= await lectureCollection.find({"studentNum":studentNum,"studentNum":studentNum}).toArray();
+        let myAppointList= await lectureCollection.find({"studentName":studentName,"studentNum":studentNum}).toArray();
         if(myAppointList.length==0){
             throw '没有您的讲座预约信息，请检查学号姓名是否正确';
         }
