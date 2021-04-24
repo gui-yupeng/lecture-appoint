@@ -17,16 +17,17 @@ exports.route={
         "grade":"2019"
         "studentName":"GYP"
         "targetLecture":"如何成为一名好后端"
+        "targeID":(待预约讲座的ID)
         "requestTime":1619092806
         "sex":"男" */
         let personData=this.params;
-        let targetLecture=personData.targetLecture;
+        let targetID=personData.targetID;
         let stuNum=null;
         let result=null;
         if(personData.studentNum){
             stuNum = personData.studentNum;
         }else{
-            this.throw(401,'请求参数不全');
+            throw '请求参数学号为空'
         }
         //学号匹配
         let isTargetStu=false;
@@ -47,13 +48,19 @@ exports.route={
         }
         if(!isTargetStu){
             //只面向电子学院本科生
-            return 'notOurStudent'
+            throw '学号错误，请输入东南大学电子科学与工程学院学号';
         }
         const auCollection=await mongo(dbMsg.col_audience);
-        let isRepeat=await auCollection.findOne({"studentNum":stuNum,"targetLecture":targetLecture});
+        const lectureCollection=await mongo(dbMsg.col_lectureMsg);
+        let isLecture=await lectureCollection.findOne({"_id":mongodb.ObjectId(targetID)});
+        console.log(isLecture);
+        //if(!isLecture){
+            //这一步是有问题的，根据ID进行检索时，ID错误程序卡在查询那行无反应，但前端发送的ID基本不会错，修复者请看mongodb的相关文档
+            //throw '根据讲座ID，未在数据库中查询到该讲座';
+        //}
+        let isRepeat=await auCollection.findOne({"studentNum":stuNum,"targetID":targetID});
         if(isRepeat){
-            //this.throw(401,'已经预约成功，无法重复预约');
-            return 'repeat';
+            throw '已经预约成功,无法重复预约';
         }else{
             result=await auCollection.insertOne(personData);
         }
