@@ -7,7 +7,6 @@ exports.route={
         let lectureID=this.params.lectureID;
         let lectureCollection=await mongo(dbMsg.col_lectureMsg);
         let lectureDetail=await lectureCollection.findOne({"_id":mongodb.ObjectId(lectureID)});
-        console.log(lectureDetail);
         return lectureDetail;
     },
     //普通用户在查询lecture细节后，进行预约
@@ -21,13 +20,13 @@ exports.route={
         "requestTime":1619092806
         "sex":"男" */
         let personData=this.params;
+        let targetLecture=personData.targetLecture;
         let stuNum=null;
         let result=null;
         if(personData.studentNum){
             stuNum = personData.studentNum;
         }else{
-            console.log('请求参数中学号项为空');
-            //this.throw(401,'请求参数不全');
+            this.throw(401,'请求参数不全');
         }
         //学号匹配
         let isTargetStu=false;
@@ -48,17 +47,21 @@ exports.route={
         }
         if(!isTargetStu){
             //只面向电子学院本科生
-            this.throw(401,'很抱歉，您不在允许预约的学生名单中，请与管理员联系');
+            return 'notOurStudent'
         }
         const auCollection=await mongo(dbMsg.col_audience);
-        let isRepeat=await auCollection.findOne({"studentNum":stuNum});
+        let isRepeat=await auCollection.findOne({"studentNum":stuNum,"targetLecture":targetLecture});
         if(isRepeat){
-            this.throw(401,'已经预约成功，无法重复预约！');
-            console.log('已经预约成功，无法重复预约');
+            //this.throw(401,'已经预约成功，无法重复预约');
+            return 'repeat';
         }else{
-            result=await audienceCollection.insertOne(personData);
+            result=await auCollection.insertOne(personData);
         }
-        console.log(result);
+        let insertID=result.insertedId;
+        result=await auCollection.findOne({"_id":mongodb.ObjectId(insertID)});
+        //插入成功就返回数据库信息
+        //非电子学院本科生返回'notOurStudent'
+        //重复预约返回'repeat'
         return result;
     }
 
