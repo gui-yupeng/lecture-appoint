@@ -13,8 +13,10 @@ exports.route={
         //MD5加密
         password=crypto.MD5(pwd).toString();
         //token
-        let tokenObj={Num:cardNum};
+        let tokenObj={Num:cardNum,Pwd:password};
+        console.log(tokenObj);
         let token=jwt.sign(tokenObj, 'ThanksForLLY');
+        console.log(token);
         let adminCollection=await mongo(dbMsg.col_admin);
         let admin= await adminCollection.findOne({"cardNum":cardNum});
         if(!admin){
