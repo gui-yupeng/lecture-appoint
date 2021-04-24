@@ -17,11 +17,11 @@ exports.route={
         let admin= await adminCollection.findOne({"cardNum":cardNum});
         if(!admin){
             //不是管理员
-            return {"result":"noCardNum"};
+            throw '您的一卡通身份不是管理员';
         }
         if(admin.password!=password){
             //密码不对
-            return {"result":"wrongPassword"};
+            throw '密码错误';
         }
         adminCollection.update({"cardNum":cardNum},{$set:{"token":token}});
         return {"result":"ok","token":token};
