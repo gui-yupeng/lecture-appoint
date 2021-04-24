@@ -11,9 +11,9 @@ exports.route={
             return 'noData'
         }
         return myAppointList;
-    },
-    //取消预约
-    async delete(){
+    }
+    //取消预约，暂时废弃取消预约功能
+    /*async delete(){
         //获得数据
         let personData=this.params;
         let studentNum=personData.studentNum;
@@ -30,6 +30,6 @@ exports.route={
         }
 
 
-    }
+    }*/
 
 };
