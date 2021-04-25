@@ -10,7 +10,18 @@ exports.route={
         if(appointList.length==0){
             throw '暂未有人预约该讲座';
         }else{
-            return appointList;
+            let ListSort=appointList.sort(function (x,y){
+                xTime=parseInt(x.requestTime);
+                yTime=parseInt(y.requestTime);
+                if(xTime>yTime){
+                    return 1;
+                }
+                if(xTime<yTime){
+                    reutrn -1;
+                }
+                return 0;
+            })
+            return ListSort;
         }
     }
 }
