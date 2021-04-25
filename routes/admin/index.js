@@ -15,7 +15,6 @@ exports.route={
         let lectureCollection=await mongo(dbMsg.col_lectureMsg);
         let result=await lectureCollection.insertOne(lectureMsg);
         let insertID=result.insertedId;
-        console.log(insertID);
         result=await lectureCollection.findOne({"_id":mongodb.ObjectId(insertID)});
         return result;
     },
