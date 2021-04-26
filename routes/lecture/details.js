@@ -31,21 +31,15 @@ exports.route={
         }
         //学号匹配
         let isTargetStu=false;
-        if(/^06017[0-9][0-9][0-9]/.test(stuNum)){
+        //17、18、19级
+        if(/^0601[7-9][0-9][0-9][0-9]/.test(stuNum)){
             isTargetStu=true;
         }
-        if(/^06018[0-9][0-9][0-9]/.test(stuNum)){
+        //20级
+        if(/^D[1-2]220[0-9][0-9][0-9]/.test(stuNum)){
             isTargetStu=true;
         }
-        if(/^06019[0-9][0-9][0-9]/.test(stuNum)){
-            isTargetStu=true;
-        }
-        if(/^D1220[0-9][0-9][0-9]/.test(stuNum)){
-            isTargetStu=true;
-        }
-        if(/^D2220[0-9][0-9][0-9]/.test(stuNum)){
-            isTargetStu=true;
-        }
+        
         if(!isTargetStu){
             //只面向电子学院本科生
             throw '学号错误，请输入东南大学电子科学与工程学院学号';
