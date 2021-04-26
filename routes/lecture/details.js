@@ -39,10 +39,22 @@ exports.route={
         if(/^D[1-2]220[0-9][0-9][0-9]/.test(stuNum)){
             isTargetStu=true;
         }
-        
+        //硕士18级、19级
+        if(/^1[8-9][0-9][0-9][0-9][0-9]/.test(stuNum)){
+            isTargetStu=true;
+        }
+        //硕士20级
+        if(/^20[0-9][0-9][0-9][0-9]/.test(stuNum)){
+            isTargetStu=true;
+        }
+        //教师101******、103******
+        if(/^10[13][0-9][0-9][0-9][0-9][0-9][0-9]/.test(stuNum)){
+            isTargetStu=true;
+        }
+        //stuNum验证结束
         if(!isTargetStu){
             //只面向电子学院本科生
-            throw '学号错误，请输入东南大学电子科学与工程学院学号';
+            throw '您不在允许预约的范围内，请与管理员联系';
         }
         const auCollection=await mongo(dbMsg.col_audience);
         const lectureCollection=await mongo(dbMsg.col_lectureMsg);
