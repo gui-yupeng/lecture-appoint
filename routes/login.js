@@ -48,6 +48,9 @@ exports.route={
             //不是管理员
             throw '您的身份不是管理员';
         }
+        if(admin.password){
+            throw '该账号已经被注册，请正常进行登陆';
+        }
         await adminCollection.updateOne({"cardNum":cardNum},{$set:{"adminName":adminName,"tel":tel,"password":password}});
         return 'ok';
     }
