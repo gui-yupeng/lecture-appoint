@@ -18,8 +18,7 @@ exports.route={
         "studentName":"GYP"
         "targetLecture":"如何成为一名好后端"
         "targeID":(待预约讲座的ID)
-        "requestTime":1619092806
-        "sex":"男" */
+        "requestTime":1619092806 */
         let personData=this.params;
         let targetID=personData.targetID;
         let stuNum=null;

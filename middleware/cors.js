@@ -4,7 +4,6 @@ const allowDomains = [
     /^127\./,
     /^172\./,
     /^192\./,
-    /^118\./
   ]
   
   module.exports = async (ctx, next) => {
@@ -15,7 +14,7 @@ const allowDomains = [
       if (domain && allowDomains.find(d => d.test(domain))) {
         ctx.set('Access-Control-Allow-Origin', origin)
         ctx.set('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,PATCH')
-        ctx.set('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,token,cache')
+        ctx.set('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,token,cache,x-api-token')
       }
     }
     if (ctx.method.toUpperCase() === 'OPTIONS') {
