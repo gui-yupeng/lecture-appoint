@@ -49,4 +49,7 @@ module.exports = async (ctx, next) => {
         reason: ctx.body,
       }
     }
+    
+    ctx.body = json
+    ctx.status = 200
 }
