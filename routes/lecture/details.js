@@ -12,7 +12,7 @@ exports.route={
     //普通用户在查询lecture细节后，进行预约
     async post(){
         //POST参数personData,数据库中AUDIENCE数据类型为：
-        /* "studentNum":"06019305"
+        /* "schoolNum":"06019305"
         "class":"060193"
         "grade":"2019"
         "studentName":"GYP"
@@ -20,11 +20,12 @@ exports.route={
         "targeID":(待预约讲座的ID)
         "requestTime":1619092806 */
         let personData=this.params;
+        console.log(personData);
         let targetID=personData.targetID;
         let stuNum=null;
         let result=null;
-        if(personData.studentNum){
-            stuNum = personData.studentNum;
+        if(personData.schoolNum){
+            stuNum = personData.schoolNum;
         }else{
             throw '请求参数学号为空'
         }
@@ -62,7 +63,7 @@ exports.route={
             //这一步是有问题的，根据ID进行检索时，ID错误程序卡在查询那行无反应，但前端发送的ID基本不会错，修复者请看mongodb的相关文档
             //throw '根据讲座ID，未在数据库中查询到该讲座';
         //}
-        let isRepeat=await auCollection.findOne({"studentNum":stuNum,"targetID":targetID});
+        let isRepeat=await auCollection.findOne({"schoolNum":stuNum,"targetID":targetID});
         if(isRepeat){
             throw '已经预约成功,无法重复预约';
         }else{
