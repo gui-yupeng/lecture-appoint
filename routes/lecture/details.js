@@ -32,29 +32,32 @@ exports.route = {
         //学号匹配
         let isTargetStu = false;
         //17、18、19级
-        if (/^0601[7-9][0-9][0-9][0-9]/.test(stuNum)) {
+        if (/^0601[7-9][0-9][0-9][0-9]$/.test(stuNum)) {
             isTargetStu = true;
         }
         //20级
-        if (/^D[1-2]220[0-9][0-9][0-9]/.test(stuNum)) {
+        if (/^D[1-2]220[0-9][0-9][0-9]$/.test(stuNum)) {
             isTargetStu = true;
         }
         //硕士18级、19级
-        if (/^1[8-9][0-9][0-9][0-9][0-9]/.test(stuNum)) {
+        if (/^1[8-9][0-9][0-9][0-9][0-9]$/.test(stuNum)) {
             isTargetStu = true;
         }
         //硕士20级
-        if (/^20[0-9][0-9][0-9][0-9]/.test(stuNum)) {
+        if (/^20[0-9][0-9][0-9][0-9]$/.test(stuNum)) {
+            isTargetStu = true;
+        }
+        if (/^61[56]/.test(stuNum)) {
             isTargetStu = true;
         }
         //教师101******、103******
-        if (/^10[13][0-9][0-9][0-9][0-9][0-9][0-9]/.test(stuNum)) {
+        if (/^10[13][0-9][0-9][0-9][0-9][0-9][0-9]$/.test(stuNum)) {
             isTargetStu = true;
         }
         //stuNum验证结束
         if (!isTargetStu) {
             //只面向电子学院本科生
-            throw '您不在允许预约的范围内，请与管理员联系';
+            throw '您不在允许预约的范围内，请检查学号，或与管理员联系';
         }
         const auCollection = await mongo(dbMsg.col_audience);
         const lectureCollection = await mongo(dbMsg.col_lectureMsg);

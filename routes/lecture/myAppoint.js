@@ -27,7 +27,6 @@ exports.route = {
         if (ListFilter.length == 0) {
             throw '没有您的讲座预约信息，请检查学号姓名是否正确';
         }
-        console.log(ListFilter);
         //按请求时间排序
         let ListSort = ListFilter.sort(function(x, y) {
             xTime = parseInt(x.requestTime);
