@@ -14,7 +14,7 @@ exports.route = {
                     return true;
                 }
             })
-            //过滤过期讲座
+        //过滤过期讲座
         let nowDate = new Date().getTime();
         let ListFilter2 = ListFilter1.filter(function(item) {
             endTime = parseInt(item.endTime);
